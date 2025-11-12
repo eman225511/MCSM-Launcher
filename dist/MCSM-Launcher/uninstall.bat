@@ -15,11 +15,28 @@ if errorlevel 1 (
     exit /b 1
 )
 
-REM Proceed to delete the folders (PowerShell handles recursion/force)
-powershell -NoProfile -Command "try { Remove-Item -LiteralPath '%MCSM%' -Recurse -Force -ErrorAction SilentlyContinue; Remove-Item -LiteralPath '%TELLTALE%' -Recurse -Force -ErrorAction SilentlyContinue; $msg2 = 'Uninstall complete. The selected folders have been deleted.'; [System.Windows.Forms.MessageBox]::Show($msg2,'Uninstall', [System.Windows.Forms.MessageBoxButtons]::OK, [System.Windows.Forms.MessageBoxIcon]::Information) } catch { $err = $_.Exception.Message; [System.Windows.Forms.MessageBox]::Show('Uninstall encountered an error: ' + $err,'Uninstall', [System.Windows.Forms.MessageBoxButtons]::OK, [System.Windows.Forms.MessageBoxIcon]::Error); exit 1 }"
+REM Proceed to delete the folders and remove shortcuts (PowerShell handles recursion/force)
+powershell -NoProfile -Command "try {
+    Add-Type -AssemblyName System.Windows.Forms;
+    $desktop = [Environment]::GetFolderPath('Desktop');
+    $desktopLnk = Join-Path $desktop 'MCSM Launcher.lnk';
+    $startPrograms = Join-Path ([Environment]::GetFolderPath('StartMenu')) 'Programs';
+    $startLnk = Join-Path $startPrograms 'MCSM Launcher.lnk';
+    Remove-Item -LiteralPath '%MCSM%' -Recurse -Force -ErrorAction SilentlyContinue;
+    Remove-Item -LiteralPath '%TELLTALE%' -Recurse -Force -ErrorAction SilentlyContinue;
+    Remove-Item -LiteralPath $desktopLnk -Force -ErrorAction SilentlyContinue;
+    Remove-Item -LiteralPath $startLnk -Force -ErrorAction SilentlyContinue;
+    $msg2 = 'Uninstall complete. The selected folders and shortcuts have been deleted.';
+    [System.Windows.Forms.MessageBox]::Show($msg2,'Uninstall', [System.Windows.Forms.MessageBoxButtons]::OK, [System.Windows.Forms.MessageBoxIcon]::Information)
+} catch {
+    $err = $_.Exception.Message;
+    [System.Windows.Forms.MessageBox]::Show('Uninstall encountered an error: ' + $err,'Uninstall', [System.Windows.Forms.MessageBoxButtons]::OK, [System.Windows.Forms.MessageBoxIcon]::Error);
+    exit 1
+}"
 
 echo.
 echo Done.
+echo The MCSM-Launcher and Telltale Games folders (and shortcuts) were removed if present.
 echo You can delete the uninstall.bat and launcher.exe files if you want.
 echo.
 pause
