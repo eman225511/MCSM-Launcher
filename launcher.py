@@ -9,6 +9,7 @@ import urllib.request
 import shutil
 import zipfile
 import tempfile
+import webbrowser
 
 # Optional Pillow support for banner resizing. If not installed we fall back to Tk's PhotoImage
 try:
@@ -403,7 +404,35 @@ class LauncherApp(tk.Tk):
         else:
             btn2 = tk.Button(btns_frame, text="Season 2", command=self.show_season2, **common_btn_opts)
         btn2.pack(side=tk.LEFT)
+        # Spacer row so footer stays at the bottom
+        parent.rowconfigure(4, weight=1)
+        spacer = tk.Label(parent, text="", bg=BG_COLOR)
+        spacer.grid(row=4, column=0, sticky=tk.NSEW)
 
+        # Footer frame with a GitHub button aligned to the right
+        footer = tk.Frame(parent, bg=BG_COLOR)
+        footer.grid(row=5, column=0, sticky=tk.EW, padx=6, pady=(8, 4))
+        footer.columnconfigure(0, weight=1)
+
+        github_url = 'https://github.com/eman225511/MCSM-Launcher'
+
+        def open_github():
+            try:
+                webbrowser.open_new_tab(github_url)
+            except Exception:
+                try:
+                    webbrowser.open(github_url)
+                except Exception:
+                    messagebox.showinfo('Open URL', f'Please visit: {github_url}')
+
+        gh_icon = self.load_icon('github.png', 16)
+        if gh_icon:
+            gh_btn = tk.Button(footer, image=gh_icon, command=open_github, bg=BTN_BG, fg=BTN_FG, activebackground=BTN_ACTIVE)
+            gh_btn.image = gh_icon
+        else:
+            gh_btn = tk.Button(footer, text='GitHub', command=open_github, bg=BTN_BG, fg=BTN_FG, activebackground=BTN_ACTIVE)
+        # place the button on the right side of the footer
+        gh_btn.pack(side=tk.RIGHT)
     def create_season_page(self, parent, title_text, banner_filename, config_key):
         parent.columnconfigure(0, weight=1)
         # Banner (use tk.Label so bg can be set)
