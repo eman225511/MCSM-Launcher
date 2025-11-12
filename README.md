@@ -2,6 +2,10 @@
 
 # [Download EXE Here](https://github.com/eman225511/MCSM-Launcher/releases)
 
+| | |
+| ------------- | ------------- |
+| ![alt](Preview3.png)  | ![alt](Preview1.png)  |
+| ![alt](Preview4.png)  | ![alt](Preview2.png)  |
 
 This is a minimal GUI launcher for Minecraft Story Mode (Season 1 & Season 2).
 
