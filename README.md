@@ -4,8 +4,8 @@
 
 | | |
 | ------------- | ------------- |
-| ![alt](Preview3.png)  | ![alt](Preview1.png)  |
-| ![alt](Preview4.png)  | ![alt](Preview2.png)  |
+| ![alt](img/Preview3.png)  | ![alt](img/Preview1.png)  |
+| ![alt](img/Preview4.png)  | ![alt](img/Preview2.png)  |
 
 This is a minimal GUI launcher for Minecraft Story Mode (Season 1 & Season 2).
 
