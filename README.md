@@ -1,6 +1,7 @@
 # Minecraft Story Mode Launcher (Python)
 
-[Download EXE Here](https://github.com/eman225511/MCSM-Launcher/releases)
+# [Download EXE Here](https://github.com/eman225511/MCSM-Launcher/releases)
+
 
 This is a minimal GUI launcher for Minecraft Story Mode (Season 1 & Season 2).
 
